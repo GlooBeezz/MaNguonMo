@@ -19,7 +19,7 @@
         <div class="col-md-4 offset-md-4">
             <form action="login_process.php" method="post">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="username" class="form-label">tài khoản</label>
                     <input type="text" class="form-control" id="username" name="username" required>
                 </div>
                 <div class="mb-3">
