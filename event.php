@@ -1,3 +1,13 @@
+
+<?php
+include_once 'functions.php';
+
+// Xử lý khi người dùng yêu cầu thêm sự kiện
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addEvent'])) {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $image = $_POST['image'];
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,25 +24,23 @@
     </div>
 </nav>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8">
-            <?php
-            // Fetch event details based on $_GET['id']
-            $eventId = $_GET['id'] ?? 0; // Replace with proper validation
-            $eventDetails = []; // Replace with your database query
+    // Gọi hàm thêm sự kiện
+    if (addEvent($title, $description, $image)) {
+        echo "Event added successfully!";
+    } else {
+        echo "Error adding event!";
+    }
+}
 
-            if ($eventDetails) {
-                echo '<h2>' . $eventDetails['title'] . '</h2>';
-                echo '<p>' . $eventDetails['description'] . '</p>';
-            } else {
-                echo '<p>Event not found.</p>';
-            }
-            ?>
-        </div>
-    </div>
-</div>
+// Xử lý khi người dùng yêu cầu xóa sự kiện
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteEvent'])) {
+    $eventId = $_POST['eventId'];
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    // Gọi hàm xóa sự kiện
+    if (deleteEvent($eventId)) {
+        echo "Event deleted successfully!";
+    } else {
+        echo "Error deleting event!";
+    }
+}
+?>
