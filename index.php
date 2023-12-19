@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="utf-8">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,35 +13,38 @@
             background-attachment: fixed;
             margin: 0; /* Loại bỏ margin mặc định */
         }
+        hr.white-line {
+        border-color: white;
+        }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/index.php">Đấu trường nhân phẩm - thắng thua tại nút D</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link" href="login.php">Đăng nhập ở đây</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="row">
+<div class="row pt-5">
     <div class="col-sm-2"></div>
-    <div class="col-sm-8">Các sự kiện gần đây</div>
+    <div class="col-sm-8 display-1 text-center text-info">Các sự kiện gần đây</div>
     <div class="col-sm-2"></div>
 </div>
-<hr>
+<hr class="white-line">
 <div class="row">
     <?php
-    // Thực hiện kết nối đến cơ sở dữ liệu
-    $servername = "localhost"; // Thay thế bằng tên máy chủ MySQL của bạn
-    $username = "root"; // Thay thế bằng tên người dùng MySQL của bạn
-    $password = ""; // Thay thế bằng mật khẩu của bạn
-    $dbname = "blog"; // Thay thế bằng tên cơ sở dữ liệu của bạn
+   
+    $servername = "localhost"; 
+    $username = "root"; 
+    $password = ""; 
+    $dbname = "blog";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -51,6 +55,7 @@
 
     // Truy vấn SQL để lấy dữ liệu từ bảng 'event'
     $sql = "SELECT id, nguon_anh, tieu_de, mo_ta FROM event";
+    mysqli_set_charset($conn, "utf8mb4");
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -61,7 +66,7 @@
             echo '<div class="card-body">';
             echo '<h5 class="card-title">' . $row['tieu_de'] . '</h5>';
             echo '<p class="card-text">' . $row['mo_ta'] . '</p>';
-            echo '<a href="event.php?id=' . $row['id'] . '" class="btn btn-primary">Details</a>';
+            echo '<a href="event.php?id=' . $row['id'] . '" class="btn btn-primary">Ghé lại xem sao?</a>';
             echo '</div>';
             echo '</div>';
             echo '</div>';

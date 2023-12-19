@@ -10,7 +10,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Đấu trường nhân phẩm - thắng thua tại nút DGame Events</a>
+        <a class="navbar-brand" href="#">Đấu trường nhân phẩm - thắng thua tại nút D</a>
     </div>
 </nav>
 
