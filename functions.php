@@ -2,7 +2,7 @@
 // Kết nối đến cơ sở dữ liệu (sử dụng PDO cho bảo mật)
 function connectDB() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=your_database_name', 'your_username', 'your_password');
+        $pdo = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     } catch (PDOException $e) {
@@ -14,10 +14,10 @@ function connectDB() {
 function addEvent($title, $description, $image) {
     $pdo = connectDB();
     
-    $stmt = $pdo->prepare("INSERT INTO events (title, description, image) VALUES (:title, :description, :image)");
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':image', $image);
+    $stmt = $pdo->prepare("INSERT INTO events (tieu_de, mo_ta, nguon_anh) VALUES (:tieu_de, :mo_ta, :nguon_anh)");
+    $stmt->bindParam(':tieu_de', $title);
+    $stmt->bindParam(':mo_ta', $description);
+    $stmt->bindParam(':nguon_anh', $image);
 
     return $stmt->execute();
 }
