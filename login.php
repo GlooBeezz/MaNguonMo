@@ -27,6 +27,7 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Oke dô-Check legit</button>
+                <p class="mt-3">Bạn chưa có tài khoản, gia nhập cộng đồng ngay thôi nào? <a href="register.php">Đăng ký ngay</a></p>
             </form>
         </div>
     </div>
