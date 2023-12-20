@@ -1,14 +1,20 @@
 <?php
+// Kiểm tra nếu là phương thức POST và có dữ liệu
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     // Lấy dữ liệu từ form
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash mật khẩu
+    $password = $_POST['password'];
+
+    // Kiểm tra dữ liệu đầu vào
+    if (empty($username) || empty($password)) {
+        echo "Vui lòng điền đầy đủ thông tin.";
+        exit();
+    }
 
     // Kết nối đến cơ sở dữ liệu
-    try {
-        $pdo = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include_once 'db_config.php'; // Thay thế bằng tên tệp cấu hình riêng của bạn
 
+    try {
         // Thực hiện truy vấn SQL để kiểm tra xem tài khoản đã tồn tại chưa
         $stmt = $pdo->prepare("SELECT * FROM user WHERE tai_khoan = :tai_khoan");
         $stmt->bindParam(':tai_khoan', $username);
@@ -23,13 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             $insertStmt->bindParam(':mat_khau', $password);
 
             if ($insertStmt->execute()) {
-                echo "Đăng ký thành công!";
+                // Đăng ký thành công, chuyển hướng đến trang index
+                header("Location: index.php");
+                exit();
             } else {
                 echo "Đăng ký thất bại. Vui lòng thử lại.";
             }
         }
     } catch (PDOException $e) {
-        die("Connection failed: " . $e->getMessage());
+        echo "Đăng ký thất bại. Vui lòng thử lại.";
     }
 }
 ?>
