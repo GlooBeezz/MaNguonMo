@@ -4,6 +4,7 @@ function connectDB() {
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->exec('SET NAMES utf8');
         return $pdo;
     } catch (PDOException $e) {
         die("Connection failed: " . $e->getMessage());
@@ -33,12 +34,13 @@ function getComments($eventId) {
 }
 
 // Thêm bình luận vào cơ sở dữ liệu
+// Thêm bình luận vào cơ sở dữ liệu
 function addComment($eventId, $comment) {
     $pdo = connectDB();
 
     $stmt = $pdo->prepare("INSERT INTO comment (event_id, comment) VALUES (:event_id, :comment)");
     $stmt->bindParam(':event_id', $eventId);
-    $stmt->bindParam(':comment', $comment);
+    $stmt->bindParam(':comment', $comment, PDO::PARAM_STR); // Đặt kiểu dữ liệu là chuỗi
 
     return $stmt->execute();
 }
