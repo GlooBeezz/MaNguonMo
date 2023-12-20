@@ -4,6 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     // Lấy dữ liệu từ form
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $ten = $_POST['ten']; 
 
     // Kiểm tra dữ liệu đầu vào
     if (empty($username) || empty($password)) {
@@ -24,9 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             echo "Tài khoản đã tồn tại. Vui lòng chọn một tài khoản khác.";
         } else {
             // Nếu tài khoản chưa tồn tại, thêm người dùng mới vào cơ sở dữ liệu
-            $insertStmt = $pdo->prepare("INSERT INTO user (tai_khoan, mat_khau) VALUES (:tai_khoan, :mat_khau)");
+            $insertStmt = $pdo->prepare("INSERT INTO user (tai_khoan, mat_khau, ten) VALUES (:tai_khoan, :mat_khau, :ten)");
             $insertStmt->bindParam(':tai_khoan', $username);
             $insertStmt->bindParam(':mat_khau', $password);
+            $insertStmt->bindParam(':ten', $ten);
 
             if ($insertStmt->execute()) {
                 // Đăng ký thành công, chuyển hướng đến trang index
@@ -37,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             }
         }
     } catch (PDOException $e) {
-        echo "Đăng ký thất bại. Vui lòng thử lại.";
+        echo "Đăng ký thất bại. Vui lòng thử lại. ".$e;
     }
 }
 ?>
@@ -64,6 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
                     <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ten" class="form-label">Tên</label>
+                    <input type="text" class="form-control" id="ten" name="ten" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name="register">Đăng ký</button>
             </form>
