@@ -25,8 +25,15 @@
         <a class="navbar-brand" href="/index.php">Đấu trường nhân phẩm - thắng thua tại nút D</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="login.php">Đăng nhập ở đây</a>
+            <li class="nav-item">
+                    <?php
+                    // Nếu đã đăng nhập, hiển thị tên người dùng
+                    if (isset($loggedInUser)) {
+                        echo '<a class="nav-link" href="#">Chào, ' . $loggedInUser . '</a>';
+                    } else {
+                        echo '<a class="nav-link" href="login.php">Đăng nhập ở đây</a>';
+                    }
+                    ?>
                 </li>
             </ul>
         </div>
@@ -98,5 +105,12 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php
+// Kiểm tra xem người dùng đã đăng nhập hay chưa
+    session_start();
+    if (isset($_SESSION['username'])) {
+        $loggedInUser = $_SESSION['username'];
+    }
+?>
 </body>
 </html>
